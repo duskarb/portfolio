@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>생각 비우기</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f2f5;
+            font-family: 'Malgun Gothic', sans-serif;
+            overflow: hidden;
+        }
+        #game-wrapper {
+            border: 2px solid #ccc;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 10px;
+        }
+        canvas {
+            display: block;
+            background-color: #eef2f7;
+        }
+        #text-input {
+            width: 80%;
+            max-width: 600px;
+            padding: 12px;
+            margin-top: 15px;
+            font-size: 18px;
+            text-align: center;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            outline: none;
+        }
+        #text-input:focus {
+            border-color: #007aff;
+        }
+        #ui-container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-wrapper">
+        <canvas id="gameCanvas"></canvas>
+    </div>
+    <input type="text" id="text-input" placeholder="이곳에 텍스트를 입력하세요...">
+    <div id="ui-container">
+        <div>SCORE: <span id="score">0</span></div>
+        <div>HI: <span id="high-score">0</span></div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const textInput = document.getElementById('text-input');
+        const scoreEl = document.getElementById('score');
+        const highScoreEl = document.getElementById('high-score');
+
+        canvas.width = 800;
+        canvas.height = 600;
+
+        // Game Variables
+        let score = 0;
+        let highScore = localStorage.getItem('textBallHighScore') || 0;
+        let currentText = '고민거리를여기에';
+        let isBallShot = false;
+
+        // Load hoop image
+        const hoopImage = new Image();
+        hoopImage.src = 'bin.png';
+
+        const ball = {
+            x: canvas.width / 2,
+            y: canvas.height - 80,
+            baseY: canvas.height - 80,
+            maxRadius: 60, // Renamed from radius
+            minRadius: 35, // Radius at the hoop
+            currentRadius: 60, // Dynamic radius
+            dx: 0,
+            dy: 0,
+            gravity: 0.5,
+            launchForce: -23
+        };
+
+        const hoop = {
+            x: canvas.width / 2,
+            y: 150,
+            width: 300,
+            height: 200,
+            speed: 3,
+            direction: 1
+        };
+
+        function drawTextBall() {
+            ctx.save();
+            ctx.translate(ball.x, ball.y);
+            ctx.fillStyle = '#333';
+            // Font size can also scale with the ball for a better effect
+            const fontSize = 10 + (ball.currentRadius / ball.maxRadius) * 10;
+            ctx.font = `${fontSize}px Malgun Gothic`;
+            
+            const text = textInput.value || currentText;
+            const angleStep = (2 * Math.PI) / text.length;
+
+            for (let i = 0; i < text.length; i++) {
+                const angle = i * angleStep;
+                ctx.save();
+                ctx.rotate(angle);
+                ctx.textAlign = 'center';
+                // Use currentRadius for positioning
+                ctx.fillText(text[i], 0, -ball.currentRadius + (fontSize / 2));
+                ctx.restore();
+            }
+            ctx.restore();
+        }
+
+        function drawHoop() {
+            ctx.drawImage(hoopImage, hoop.x - hoop.width / 2, hoop.y - hoop.height / 2, hoop.width, hoop.height);
+        }
+
+        function updateHoop() {
+            hoop.x += hoop.speed * hoop.direction;
+            if (hoop.x + hoop.width / 2 > canvas.width || hoop.x - hoop.width / 2 < 0) {
+                hoop.direction *= -1;
+            }
+        }
+
+        function updateBall() {
+            if (!isBallShot) {
+                ball.x = canvas.width / 2;
+                ball.y = ball.baseY;
+                ball.currentRadius = ball.maxRadius;
+                return;
+            }
+
+            ball.dy += ball.gravity;
+            ball.y += ball.dy;
+            ball.x += ball.dx;
+
+            // --- Dynamic Scaling Logic ---
+            const journeyTotal = ball.baseY - hoop.y;
+            const journeyTravelled = ball.baseY - ball.y;
+            let progress = journeyTravelled / journeyTotal;
+            progress = Math.max(0, Math.min(1, progress)); // Clamp progress between 0 and 1
+
+            ball.currentRadius = ball.maxRadius - progress * (ball.maxRadius - ball.minRadius);
+            // --- End of Scaling Logic ---
+
+            // Check for score
+            if (ball.dy > 0 &&
+                ball.y > hoop.y && ball.y < hoop.y + 20 &&
+                ball.x > hoop.x - hoop.width / 3 && ball.x < hoop.x + hoop.width / 3) {
+                score++;
+                if (score > highScore) {
+                    highScore = score;
+                    localStorage.setItem('textBallHighScore', highScore);
+                }
+                resetBall();
+            }
+
+            if (ball.y > canvas.height) {
+                resetBall();
+            }
+        }
+
+        function resetBall() {
+            isBallShot = false;
+            ball.dx = 0;
+            ball.dy = 0;
+            ball.currentRadius = ball.maxRadius;
+        }
+
+        function shootBall() {
+            if (isBallShot) return;
+            isBallShot = true;
+            ball.dy = ball.launchForce;
+            ball.dx = (Math.random() - 0.5) * 4;
+        }
+
+        function updateUI() {
+            scoreEl.textContent = score;
+            highScoreEl.textContent = highScore;
+        }
+
+        function gameLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            updateHoop();
+            drawHoop();
+            updateBall();
+            drawTextBall();
+            updateUI();
+            requestAnimationFrame(gameLoop);
+        }
+
+        textInput.addEventListener('input', (e) => {
+            currentText = e.target.value;
+            if (currentText.length === 0) {
+                currentText = '농구공';
+            }
+        });
+
+        window.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                shootBall();
+            }
+        });
+
+        hoopImage.onload = () => {
+            highScoreEl.textContent = highScore;
+            gameLoop();
+        };
+    </script>
+</body>
+</html>

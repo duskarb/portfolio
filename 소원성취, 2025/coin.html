@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>소원 동전 던지기</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-image: url('trevi.jpg.webp');
+            background-size: cover;
+            background-position: center;
+            font-family: 'Nanum Myeongjo', serif;
+        }
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.1); /* Slightly darken the background */
+        }
+        #ui-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+        }
+        #wish-input {
+            width: 80%;
+            max-width: 500px;
+            padding: 12px;
+            font-size: 18px;
+            text-align: center;
+            border: 1px solid #fff;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            outline: none;
+            color: #333;
+        }
+        #instructions {
+            color: #fff;
+            margin-top: 10px;
+            font-size: 16px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas"></canvas>
+    <div id="ui-container">
+        <input type="text" id="wish-input" placeholder="소원을 적어보세요...">
+        <p id="instructions">동전을 클릭하고 드래그해서 던져보세요</p>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const wishInput = document.getElementById('wish-input');
+        const uiContainer = document.getElementById('ui-container');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let gameState = 'WRITING_WISH'; // WRITING_WISH, READY_TO_TOSS, COIN_IN_FLIGHT
+        let currentText = '행복';
+        let splashes = [];
+        let isDragging = false;
+        let dragStart = { x: 0, y: 0 };
+
+        const coin = {
+            x: canvas.width / 2,
+            y: canvas.height - 150,
+            baseX: canvas.width / 2,
+            baseY: canvas.height - 150,
+            radius: 50,
+            dx: 0,
+            dy: 0,
+            rotation: 0,
+            scale: 1,
+            gravity: 0.3,
+            isThrown: false
+        };
+
+        function drawCoin() {
+            if (coin.isThrown && coin.scale < 0.1) return;
+
+            ctx.save();
+            ctx.translate(coin.x, coin.y);
+            ctx.scale(coin.scale, coin.scale);
+            ctx.rotate(coin.rotation);
+
+            ctx.beginPath();
+            ctx.arc(0, 0, coin.radius, 0, Math.PI * 2);
+            ctx.fillStyle = 'gold';
+            ctx.fill();
+            ctx.strokeStyle = '#b8860b';
+            ctx.lineWidth = 4;
+            ctx.stroke();
+
+            ctx.fillStyle = '#a07000';
+            ctx.font = '12px Nanum Myeongjo';
+            const angleStep = (Math.PI * 2) / currentText.length;
+            for (let i = 0; i < currentText.length; i++) {
+                const angle = i * angleStep;
+                ctx.save();
+                ctx.rotate(angle);
+                ctx.textAlign = 'center';
+                ctx.fillText(currentText[i], 0, -coin.radius + 12);
+                ctx.restore();
+            }
+            ctx.restore();
+        }
+
+        function updateCoin() {
+            if (!coin.isThrown) return;
+
+            coin.dy += coin.gravity;
+            coin.x += coin.dx;
+            coin.y += coin.dy;
+            coin.rotation += coin.dx * 0.05;
+
+            const heightProgress = (coin.baseY - coin.y) / (coin.baseY * 0.8);
+            coin.scale = Math.max(0.1, 1 - heightProgress * 0.8);
+
+            if (coin.y > canvas.height * 0.65 && coin.dy > 0) {
+                splashes.push(new Splash(coin.x, coin.y, coin.scale));
+                resetCoin();
+            }
+        }
+
+        function resetCoin() {
+            coin.isThrown = false;
+            coin.x = coin.baseX;
+            coin.y = coin.baseY;
+            coin.dx = 0;
+            coin.dy = 0;
+            coin.scale = 1;
+            coin.rotation = 0;
+            
+            // Reset to writing state
+            gameState = 'WRITING_WISH';
+            uiContainer.style.display = 'flex';
+            wishInput.value = '';
+            wishInput.focus();
+        }
+
+        class Splash {
+            constructor(x, y, scale) {
+                this.x = x;
+                this.y = y;
+                this.radius = 10 * scale;
+                this.maxRadius = 40 * scale;
+                this.life = 1;
+            }
+            update() {
+                this.life -= 0.04;
+                this.radius += 0.5;
+            }
+            draw() {
+                ctx.strokeStyle = `rgba(255, 255, 255, ${this.life})`;
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+        }
+
+        function handlePointerDown(e) {
+            if (gameState !== 'READY_TO_TOSS' || coin.isThrown) return;
+            const pointerX = e.clientX || e.touches[0].clientX;
+            const pointerY = e.clientY || e.touches[0].clientY;
+            const dist = Math.hypot(pointerX - coin.x, pointerY - coin.y);
+            if (dist < coin.radius) {
+                isDragging = true;
+                dragStart.x = pointerX;
+                dragStart.y = pointerY;
+            }
+        }
+
+        function handlePointerMove(e) {
+            if (!isDragging) return;
+        }
+
+        function handlePointerUp(e) {
+            if (!isDragging) return;
+            isDragging = false;
+            gameState = 'COIN_IN_FLIGHT';
+            const pointerX = e.clientX || e.changedTouches[0].clientX;
+            const pointerY = e.clientY || e.changedTouches[0].clientY;
+
+            coin.dx = (dragStart.x - pointerX) / 10;
+            coin.dy = (dragStart.y - pointerY) / 10;
+            coin.isThrown = true;
+        }
+
+        function gameLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (gameState === 'READY_TO_TOSS' || gameState === 'COIN_IN_FLIGHT') {
+                updateCoin();
+                drawCoin();
+            }
+
+            splashes.forEach((splash, index) => {
+                splash.update();
+                splash.draw();
+                if (splash.life <= 0) {
+                    splashes.splice(index, 1);
+                }
+            });
+
+            requestAnimationFrame(gameLoop);
+        }
+
+        wishInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const wishText = wishInput.value.trim();
+                if (wishText) {
+                    currentText = wishText;
+                } else {
+                    currentText = '행복'; // Default if empty
+                }
+                gameState = 'READY_TO_TOSS';
+                uiContainer.style.display = 'none';
+            }
+        });
+
+        canvas.addEventListener('mousedown', handlePointerDown);
+        canvas.addEventListener('mousemove', handlePointerMove);
+        canvas.addEventListener('mouseup', handlePointerUp);
+        canvas.addEventListener('touchstart', handlePointerDown);
+        canvas.addEventListener('touchmove', handlePointerMove);
+        canvas.addEventListener('touchend', handlePointerUp);
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            coin.baseX = canvas.width / 2;
+            if (!coin.isThrown) {
+                resetCoin();
+            }
+        });
+
+        gameLoop();
+    </script>
+</body>
+</html>
