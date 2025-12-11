@@ -4,40 +4,43 @@ export interface Song {
     src: string;
 }
 
+// Base path should match next.config.ts basePath
+const basePath = "/portfolio";
+
 export const songs: Song[] = [
     {
         title: "ETA",
         artist: "DO.NE",
-        src: "/music/eta_done.mp3"
+        src: `${basePath}/music/eta_done.mp3`
     },
     {
         title: "How Sweet",
         artist: "DO.NE",
-        src: "/music/how_sweet.mp3"
+        src: `${basePath}/music/how_sweet.mp3`
     },
     {
         title: "ETA (250 Remix)",
         artist: "NewJeans",
-        src: "/music/eta_newjeans.mp3"
+        src: `${basePath}/music/eta_newjeans.mp3`
     },
     {
         title: "No Flex Zone Remix",
         artist: "Okasian",
-        src: "/music/no_flex_zone.mp3"
+        src: `${basePath}/music/no_flex_zone.mp3`
     },
     {
         title: "Free Somebody",
         artist: "SUMIN",
-        src: "/music/free_somebody.mp3"
+        src: `${basePath}/music/free_somebody.mp3`
     },
     {
         title: "King TANTAN",
         artist: "Y2K92",
-        src: "/music/king_tantan.mp3"
+        src: `${basePath}/music/king_tantan.mp3`
     },
     {
         title: "Velocity",
         artist: "Unknown",
-        src: "/music/velocity.mp3"
+        src: `${basePath}/music/velocity.mp3`
     }
 ];

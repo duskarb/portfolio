@@ -24,14 +24,24 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
     const [isPlaying, setIsPlaying] = useState(false);
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
+    const nextSong = useCallback(() => {
+        if (!currentSong) return;
+        const currentIndex = songs.findIndex(s => s.src === currentSong.src);
+        const nextIndex = (currentIndex + 1) % songs.length;
+        setCurrentSong(songs[nextIndex]);
+        setIsPlaying(true);
+    }, [currentSong]);
+
     useEffect(() => {
         audioRef.current = new Audio();
-        audioRef.current.onended = () => {
-            nextSong();
+        audioRef.current.onerror = () => {
+            // Silently handle audio loading errors (e.g., 404 for missing files)
+            console.warn("Audio file could not be loaded:", audioRef.current?.src);
         };
         return () => {
             if (audioRef.current) {
                 audioRef.current.pause();
+                audioRef.current.src = '';
                 audioRef.current = null;
             }
         };
@@ -40,16 +50,23 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
     useEffect(() => {
         if (currentSong && audioRef.current) {
             audioRef.current.src = currentSong.src;
+            audioRef.current.onended = () => {
+                nextSong();
+            };
             if (isPlaying) {
-                audioRef.current.play().catch(e => console.error("Playback failed", e));
+                audioRef.current.play().catch(() => {
+                    // Silently handle playback errors
+                });
             }
         }
-    }, [currentSong]);
+    }, [currentSong, isPlaying, nextSong]);
 
     useEffect(() => {
         if (audioRef.current) {
             if (isPlaying) {
-                audioRef.current.play().catch(e => console.error("Playback failed", e));
+                audioRef.current.play().catch(() => {
+                    // Silently handle playback errors
+                });
             } else {
                 audioRef.current.pause();
             }
@@ -80,14 +97,6 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
             audioRef.current.pause();
         }
     }, []);
-
-    const nextSong = useCallback(() => {
-        if (!currentSong) return;
-        const currentIndex = songs.findIndex(s => s.src === currentSong.src);
-        const nextIndex = (currentIndex + 1) % songs.length;
-        setCurrentSong(songs[nextIndex]);
-        setIsPlaying(true);
-    }, [currentSong]);
 
     const prevSong = useCallback(() => {
         if (!currentSong) return;
