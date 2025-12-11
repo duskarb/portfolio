@@ -21,7 +21,8 @@ export interface Project {
   href?: string;
 }
 
-const basePath = "/portfolio/projects";
+// 개발 환경에서는 basePath 없이, 프로덕션에서는 /portfolio 경로 사용
+const basePath = process.env.NODE_ENV === 'production' ? "/portfolio/projects" : "/projects";
 
 const projectsData: Array<{
   name: string;
