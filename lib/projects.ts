@@ -21,7 +21,7 @@ export interface Project {
   href?: string;
 }
 
-const basePath = "/projects";
+const basePath = "/portfolio/projects";
 
 const projectsData: Array<{
   name: string;
