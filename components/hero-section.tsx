@@ -6,7 +6,6 @@ import { projects } from "@/lib/projects";
 export default function HeroSection() {
   const featuredProjects = [
     projects.find(p => p.slug === "당신의-역할은-입력(on-going)-2025"),
-    projects.find(p => p.slug === "closure-2025"),
     projects.find(p => p.slug === "exhalo-2025"),
     projects.find(p => p.slug === "twist-the-plot-2024"),
     projects.find(p => p.slug === "time-stick-2024"),
@@ -25,8 +24,8 @@ export default function HeroSection() {
             into prototypes that explore the boundaries between humans, non-humans, and the systems we rely on.
             From mobility concepts and physical–digital products to web-based media artworks, I aim to balance
             usability with expressive interaction, designing experiences that are intuitive yet characterful.
-            <br/><br />
-            prism011312@kaist.ac.kr
+            <br/><br/>
+            <a href="mailto:prism011312@kaist.ac.kr" className="text-black underline">prism011312@kaist.ac.kr</a>
           </p>
         </div>
 

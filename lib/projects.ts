@@ -100,20 +100,6 @@ const projectsData: Array<{
       ]
     },
     {
-      name: "어처구니 장벽, 2025",
-      type: "gallery",
-      thumbnail: "어처구니_장벽_2025/1.png",
-      description:
-        "이 사이트는 어처구니 지수가 일정 점수 이상일 때만 접근할 수 있는 장벽입니다. 모든 점수 계산은 텍스트 입력으로 이루어지며, Gemini API로 실시간 분석됩니다.",
-      label: "html",
-      media: [
-        { type: "image", src: "어처구니_장벽_2025/1.png" },
-        { type: "image", src: "어처구니_장벽_2025/2.png" },
-        { type: "image", src: "어처구니_장벽_2025/3.png" },
-        { type: "image", src: "어처구니_장벽_2025/4.png" }
-      ]
-    },
-    {
       name: "Exhalo, 2025",
       type: "gallery",
       thumbnail: "Exhalo_2025/thumbnail.png",
