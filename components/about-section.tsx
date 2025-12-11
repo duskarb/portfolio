@@ -64,6 +64,18 @@ const aboutEntries: {
     ]
   },
   {
+    id: "award",
+    title: "Award",
+    items: [
+      {
+        type: "entry",
+        title: "AI 크리에이티브 챌린지 대상",
+        subtitle: "KAIST 'LUCY' 팀",
+        date: "2025.07"
+      }
+    ]
+  },
+  {
     id: "tools",
     title: "Tools",
     items: [
