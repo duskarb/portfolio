@@ -48,7 +48,7 @@ export default function ProjectGrid({ items, standalone = false }: ProjectGridPr
   }, [activeProject, handleNext, handlePrevious]);
 
   return (
-    <section className={standalone ? "" : "py-12 border-b border-black"}>
+    <section className={standalone ? "" : "pt-[80px] pb-12 border-b border-black"}>
       {!standalone && (
         <div className="mb-12">
           <h2 className="text-3xl md:text-4xl font-normal tracking-tight text-black">

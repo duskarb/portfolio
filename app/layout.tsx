@@ -17,7 +17,7 @@ export default function RootLayout({
       <body>
         <Navigation />
         <main className="pt-16 min-h-screen bg-white">
-          <div className="container py-12">
+          <div className="container py-8">
             {children}
           </div>
         </main>

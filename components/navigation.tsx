@@ -21,7 +21,7 @@ export default function Navigation() {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white">
-      <div className="container flex items-center justify-between py-2 md:py-4">
+      <div className="container flex items-center justify-between py-2 md:py-5">
         <Link
           href="/"
           className="text-xl md:text-[35px] font-normal text-black"

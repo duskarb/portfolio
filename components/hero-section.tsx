@@ -14,7 +14,7 @@ export default function HeroSection() {
   ].filter(Boolean);
 
   return (
-    <section className="min-h-screen py-24 md:py-0">
+    <section className="min-h-screen">
       <div className="flex flex-col md:flex-row gap-12 md:gap-16 h-full">
         <div className="flex-1 md:sticky md:top-24 md:self-start space-y-8">
           <p className="text-base md:text-lg text-black max-w-2xl leading-relaxed">
@@ -25,6 +25,8 @@ export default function HeroSection() {
             into prototypes that explore the boundaries between humans, non-humans, and the systems we rely on.
             From mobility concepts and physical–digital products to web-based media artworks, I aim to balance
             usability with expressive interaction, designing experiences that are intuitive yet characterful.
+            <br/><br />
+            prism011312@kaist.ac.kr
           </p>
         </div>
 
