@@ -140,3 +140,6 @@ git push -u origin main
 - **빌드 에러**: `npm run build`를 로컬에서 먼저 테스트해보세요
 - **이미지가 안 보임**: `images.unoptimized: true` 설정 확인
 - **경로 문제**: GitHub Pages 사용 시 `basePath` 설정이 올바른지 확인
+
+
+

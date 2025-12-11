@@ -5,6 +5,7 @@ import { projects } from "@/lib/projects";
 
 export default function HeroSection() {
   const featuredProjects = [
+    projects.find(p => p.slug === "당신의-역할은-입력(on-going)-2025"),
     projects.find(p => p.slug === "closure-2025"),
     projects.find(p => p.slug === "exhalo-2025"),
     projects.find(p => p.slug === "twist-the-plot-2024"),
@@ -27,7 +28,7 @@ export default function HeroSection() {
           </p>
         </div>
 
-        <div className="flex-1 max-w-md space-y-4 overflow-y-auto max-h-screen md:max-h-[calc(100vh-6rem)]">
+        <div className="flex-1 max-w-md space-y-4 overflow-y-auto max-h-screen md:max-h-[calc(100vh-6rem)] scrollbar-hide">
           {featuredProjects.map((project) => (
             project && (
               <Link

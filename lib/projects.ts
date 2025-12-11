@@ -33,6 +33,16 @@ const projectsData: Array<{
   media?: ProjectMedia[];
 }> = [
     {
+      name: "당신의_역할은_입력(on going), 2025",
+      type: "gallery",
+      thumbnail: "당신의_역할은_입력(on going)_2025/IMG_5701.PNG",
+      description: "인간과 기계의 관계를 다룬 인터렉티브 웹 아트 프로젝트",
+      media: [
+        { type: "image", src: "당신의_역할은_입력(on going)_2025/IMG_5701.PNG" },
+        { type: "image", src: "당신의_역할은_입력(on going)_2025/IMG_5702.PNG" }
+      ]
+    },
+    {
       name: "closure, 2025",
       type: "html",
       thumbnail: "closure_2025/스크린샷 2025-12-11 오전 8.47.35.png",
