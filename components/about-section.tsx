@@ -41,7 +41,7 @@ const aboutEntries: {
           type: "entry",
           title: "KAIST Visual Instruments Lab",
           subtitle: "Individual Research",
-          date: "2024.12 – 2025.02"
+          date: "2025.02 – Present"
         },
         {
           type: "entry",
