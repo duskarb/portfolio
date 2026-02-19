@@ -43,7 +43,7 @@ const aboutEntries: {
         type: "entry",
         title: "KAIST Visual Instruments Lab",
         subtitle: "Individual Research",
-        date: "2025.02 – Present",
+        date: "2025.12 – Present",
       },
       {
         type: "entry",
@@ -113,7 +113,7 @@ const aboutEntries: {
         type: "entry",
         title: "KAIST ID 상설전시",
         subtitle: "Mobility Design(ORCA)",
-        date: "2025.11",
+        date: "2025.11 - Present",
       },
     ],
   },
