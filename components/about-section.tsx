@@ -1,121 +1,152 @@
 "use client";
 
-type AboutItem = {
-  type: "text";
-  content: string;
-} | {
-  type: "entry";
-  title: string;
-  subtitle?: string;
-  date: string;
-};
+type AboutItem =
+  | {
+      type: "text";
+      content: string;
+    }
+  | {
+      type: "entry";
+      title: string;
+      subtitle?: string;
+      date: string;
+    };
 
 const aboutEntries: {
   id: string;
   title: string;
   items: AboutItem[];
 }[] = [
-    {
-      id: "education",
-      title: "Education",
-      items: [
-        {
-          type: "entry",
-          title: "Industrial Design Dept, KAIST",
-          subtitle: "Daejeon",
-          date: "2022.02 – Present"
-        },
-        {
-          type: "entry",
-          title: "Kyunghee High School",
-          subtitle: "Seoul",
-          date: "2019.02 – 2022.02"
-        }
-      ]
-    },
-    {
-      id: "experience",
-      title: "Experience",
-      items: [
-        {
-          type: "entry",
-          title: "KAIST Visual Instruments Lab",
-          subtitle: "Individual Research",
-          date: "2025.02 – Present"
-        },
-        {
-          type: "entry",
-          title: "ID KAIST Student Council",
-          subtitle: "President",
-          date: "2024.02 – 2025.02"
-        },
-        {
-          type: "entry",
-          title: "KAIST Student Ambassador",
-          subtitle: "KAINURI",
-          date: "2022.03 – 2024.02"
-        },
-        {
-          type: "entry",
-          title: "Kyunghee Robot Club",
-          subtitle: "Member",
-          date: "2019.06 – 2021.12"
-        }
-      ]
-    },
-    {
-      id: "award",
-      title: "Award",
-      items: [
-        {
-          type: "entry",
-          title: "AI 크리에이티브 챌린지 대상",
-          subtitle: "Exhalo",
-          date: "2025.07"
-        },
-        {
-          type: "text",
-          content: "(More to come in the future...)"
-        }
-      ]
-    },
-    {
-      id: "exhibition",
-      title: "Exhibition",
-      items: [
-        {
-          type: "entry",
-          title: "2025 Deajeon Design Festa",
-          subtitle: "Exhalo",
-          date: "2025.11"
-        }
-      ]
-    },
-    {
-      id: "tools",
-      title: "Tools",
-      items: [
-        { type: "text", content: "After Effects, Premiere Pro, Illustrator, Photoshop" },
-        { type: "text", content: "TouchDesigner, MidJourney, Rhino 7, Keyshot" },
-        { type: "text", content: "Arduino, Figma" }
-      ]
-    },
-    {
-      id: "contact",
-      title: "Contact",
-      items: [
-        { type: "text", content: "prism011312@kaist.ac.kr" },
-        { type: "text", content: "@duskarb" },
-        { type: "text", content: "+82 10 7101 5732" }
-      ]
-    }
-  ];
+  {
+    id: "education",
+    title: "Education",
+    items: [
+      {
+        type: "entry",
+        title: "Industrial Design Dept, KAIST",
+        subtitle: "Daejeon",
+        date: "2022.02 – Present",
+      },
+      {
+        type: "entry",
+        title: "Kyunghee High School",
+        subtitle: "Seoul",
+        date: "2019.02 – 2022.02",
+      },
+    ],
+  },
+  {
+    id: "experience",
+    title: "Experience",
+    items: [
+      {
+        type: "entry",
+        title: "KAIST Visual Instruments Lab",
+        subtitle: "Individual Research",
+        date: "2025.02 – Present",
+      },
+      {
+        type: "entry",
+        title: "KAIST Move Lab",
+        subtitle: "Individual Research",
+        date: "2024.12 – 2025.02",
+      },
+      {
+        type: "entry",
+        title: "ID KAIST Student Council",
+        subtitle: "President",
+        date: "2024.02 – 2025.02",
+      },
+      {
+        type: "entry",
+        title: "KAIST Student Ambassador",
+        subtitle: "KAINURI",
+        date: "2022.03 – 2024.02",
+      },
+      {
+        type: "entry",
+        title: "Kyunghee Robot Club",
+        subtitle: "Member",
+        date: "2019.06 – 2021.12",
+      },
+    ],
+  },
+  {
+    id: "award",
+    title: "Award",
+    items: [
+      {
+        type: "entry",
+        title: "AI 크리에이티브 챌린지 대상",
+        subtitle: "Exhalo",
+        date: "2025.07",
+      },
+      {
+        type: "text",
+        content: "(More to come in the future...)",
+      },
+    ],
+  },
+  {
+    id: "exhibition",
+    title: "Exhibition",
+    items: [
+      {
+        type: "entry",
+        title: "2025 Deajeon Design Festa",
+        subtitle: "Exhalo",
+        date: "2025.11",
+      },
+      {
+        type: "entry",
+        title: "2024 ID KAIST Project Exhibition",
+        subtitle: "영상디자인, 사진기법",
+        date: "2024.11",
+      },
+      {
+        type: "entry",
+        title: "2025 ID KAIST Project Exhibition",
+        subtitle: "Mobility Design with AI(Exhalo)",
+        date: "2025.11",
+      },
+      {
+        type: "entry",
+        title: "KAIST ID 상설전시",
+        subtitle: "Mobility Design(ORCA)",
+        date: "2025.11",
+      },
+    ],
+  },
+  {
+    id: "tools",
+    title: "Tools",
+    items: [
+      {
+        type: "text",
+        content: "After Effects, Premiere Pro, Illustrator, Photoshop",
+      },
+      { type: "text", content: "TouchDesigner, MidJourney, Rhino 7, Keyshot" },
+      { type: "text", content: "Arduino, Figma" },
+    ],
+  },
+  {
+    id: "contact",
+    title: "Contact",
+    items: [
+      { type: "text", content: "prism011312@kaist.ac.kr" },
+      { type: "text", content: "@duskarb" },
+      { type: "text", content: "+82 10 7101 5732" },
+    ],
+  },
+];
 
 interface AboutSectionProps {
   standalone?: boolean;
 }
 
-export default function AboutSection({ standalone = false }: AboutSectionProps) {
+export default function AboutSection({
+  standalone = false,
+}: AboutSectionProps) {
   return (
     <section className={standalone ? "" : "py-12 border-b border-black"}>
       {!standalone && (
