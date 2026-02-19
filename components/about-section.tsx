@@ -125,8 +125,11 @@ const aboutEntries: {
         type: "text",
         content: "After Effects, Premiere Pro, Illustrator, Photoshop",
       },
-      { type: "text", content: "TouchDesigner, MidJourney, Rhino 7, Keyshot" },
-      { type: "text", content: "Arduino, Figma" },
+      { type: "text", content: "TouchDesigner, MidJourney, Rhino, Keyshot" },
+      {
+        type: "text",
+        content: "Arduino, Figma, Python, HTML, CSS, JavaScript",
+      },
     ],
   },
   {
