@@ -249,11 +249,18 @@ export default function HomePage() {
                 const ytMedia = p.media.find((m) => m.type === "youtube");
                 const isYoutubeOnly = ytMedia && p.media.length === 1;
 
-                if (isYoutubeOnly) {
-                  const match = ytMedia.src.match(/\/embed\/([a-zA-Z0-9_-]+)/);
-                  const href = match
-                    ? `https://www.youtube.com/watch?v=${match[1]}`
-                    : ytMedia.src;
+                const isHtmlProject = p.type === "html" && p.href;
+
+                if (isYoutubeOnly || isHtmlProject) {
+                  let href = p.href || "";
+                  if (isYoutubeOnly && ytMedia) {
+                    const match = ytMedia.src.match(
+                      /\/embed\/([a-zA-Z0-9_-]+)/,
+                    );
+                    href = match
+                      ? `https://www.youtube.com/watch?v=${match[1]}`
+                      : ytMedia.src;
+                  }
                   return (
                     <a
                       key={p.id}
