@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { projects, Project } from "@/lib/projects";
+import { projects } from "@/lib/projects";
 
 type ViewState = "home" | "about" | "projects" | "contact";
 
