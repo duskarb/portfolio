@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Navigation from "@/components/navigation";
 
 export const metadata: Metadata = {
-  title: "Portfolio — Namkyu Yeo",
-  description: "Namkyu Yeo's Portfolio",
+  title: "yeonamkyu",
+  description: "yeonamkyu's Portfolio",
 };
 
 export default function RootLayout({
@@ -13,15 +12,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
-      <body>
-        <Navigation />
-        <main className="pt-16 min-h-screen bg-white">
-          <div className="container py-8">
-            {children}
-          </div>
-        </main>
-      </body>
+    <html lang="en">
+      <body className="antialiased">{children}</body>
     </html>
   );
 }

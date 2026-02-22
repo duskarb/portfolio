@@ -36,22 +36,22 @@ const projectsData: Array<{
     {
       name: "당신의_역할은_입력(on going), 2025",
       type: "gallery",
-      thumbnail: "당신의_역할은_입력(on going)_2025/IMG_5701.PNG",
+      thumbnail: "당신의_역할은_입력(on going)_2025/IMG_5701.PNG.jpg",
       description: "인간과 기계의 관계를 다룬 인터렉티브 웹 아트 프로젝트",
       media: [
-        { type: "image", src: "당신의_역할은_입력(on going)_2025/IMG_5701.PNG" },
-        { type: "image", src: "당신의_역할은_입력(on going)_2025/IMG_5702.PNG" }
+        { type: "image", src: "당신의_역할은_입력(on going)_2025/IMG_5701.PNG.jpg" },
+        { type: "image", src: "당신의_역할은_입력(on going)_2025/IMG_5702.PNG.jpg" }
       ]
     },
     {
       name: "closure, 2025",
       type: "html",
-      thumbnail: "closure_2025/스크린샷 2025-12-11 오전 8.47.35.png",
+      thumbnail: "closure_2025/스크린샷 2025-12-11 오전 8.47.35.jpg",
       description: "eternal sunshine: 인터랙티브 웹 프로젝트",
       href: "https://duskarb.github.io/eternal-sunshine/",
       label: "html",
       media: [
-        { type: "image", src: "closure_2025/스크린샷 2025-12-11 오전 8.47.35.png" }
+        { type: "image", src: "closure_2025/스크린샷 2025-12-11 오전 8.47.35.jpg" }
       ]
     },
     {
@@ -89,7 +89,7 @@ const projectsData: Array<{
     {
       name: "twist_the_plot, 2024",
       type: "gallery",
-      thumbnail: "twist_the_plot_2024/thumbnail.png",
+      thumbnail: "twist_the_plot_2024/thumbnail.jpg",
       description: "twist the plot of the story!!!: 영상디자인 수업 과제",
       label: "video",
       media: [
@@ -102,7 +102,7 @@ const projectsData: Array<{
     {
       name: "Exhalo, 2025",
       type: "gallery",
-      thumbnail: "Exhalo_2025/thumbnail.png",
+      thumbnail: "Exhalo_2025/thumbnail.jpg",
       description: "exhalo is an autonomous smoke-control drone system: AI를 활용한 모빌리티 디자인 수업 과제",
       label: "mobility design",
       media: [
@@ -110,14 +110,14 @@ const projectsData: Array<{
           type: "youtube",
           src: "https://www.youtube-nocookie.com/embed/AqyOdRna-NE"
         },
-        { type: "image", src: "Exhalo_2025/1.png" },
-        { type: "image", src: "Exhalo_2025/2.png" },
-        { type: "image", src: "Exhalo_2025/3.png" },
+        { type: "image", src: "Exhalo_2025/1.jpg" },
+        { type: "image", src: "Exhalo_2025/2.jpg" },
+        { type: "image", src: "Exhalo_2025/3.jpg" },
         { type: "image", src: "Exhalo_2025/4.png" },
-        { type: "image", src: "Exhalo_2025/5.png" },
-        { type: "image", src: "Exhalo_2025/6.png" },
-        { type: "image", src: "Exhalo_2025/7.png" },
-        { type: "image", src: "Exhalo_2025/8.png" }
+        { type: "image", src: "Exhalo_2025/5.jpg" },
+        { type: "image", src: "Exhalo_2025/6.jpg" },
+        { type: "image", src: "Exhalo_2025/7.jpg" },
+        { type: "image", src: "Exhalo_2025/8.jpg" }
       ]
     },
     {
@@ -143,13 +143,13 @@ const projectsData: Array<{
           type: "youtube",
           src: "https://www.youtube-nocookie.com/embed/ZL638yTQCjE"
         },
-        { type: "image", src: "ORCA_2025/1.png" },
-        { type: "image", src: "ORCA_2025/2.png" },
+        { type: "image", src: "ORCA_2025/1.jpg" },
+        { type: "image", src: "ORCA_2025/2.jpg" },
         { type: "image", src: "ORCA_2025/3.png" },
-        { type: "image", src: "ORCA_2025/4.png" },
-        { type: "image", src: "ORCA_2025/5.png" },
-        { type: "image", src: "ORCA_2025/6.png" },
-        { type: "image", src: "ORCA_2025/7.png" }
+        { type: "image", src: "ORCA_2025/4.jpg" },
+        { type: "image", src: "ORCA_2025/5.jpg" },
+        { type: "image", src: "ORCA_2025/6.jpg" },
+        { type: "image", src: "ORCA_2025/7.jpg" }
       ]
     },
     {
